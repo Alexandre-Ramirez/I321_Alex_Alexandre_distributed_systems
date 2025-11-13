@@ -7,7 +7,7 @@ const db = {
                 user: "root",
                 password: "",
                 port: 3306,
-                database: "cyno_client", //database name
+                database: "pizza_resto", //database name
             });
             console.log("Connected to DB");
             return connection;
