@@ -1,0 +1,10 @@
+doctype html
+html
+    head
+        title Liste des pizzas
+    body
+        h1 Nos pizzas
+        ul
+            each pizza in pizzas
+                li
+                    a(href=`/pizzas/${pizza.id}`) #{pizza.name} - CHF #{pizza.price}
