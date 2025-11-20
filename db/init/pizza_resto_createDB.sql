@@ -16,8 +16,12 @@ DROP TABLE IF EXISTS pizzas;
 CREATE TABLE pizzas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
+    description TEXT,
+    imageUrl TEXT,
 	price DECIMAL(5,2) NOT NULL
-	);
+    -- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 	
 -- ==========================================================
 -- Table : ingredients
@@ -25,7 +29,7 @@ CREATE TABLE pizzas (
 DROP TABLE IF EXISTS ingredients;
 CREATE TABLE ingredients (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	`name` VARCHAR(50) pizza_restopizzasNOT NULL,
+	`name` VARCHAR(50) NOT NULL,
 	gramme int NOT NULL,
 	country VARCHAR (50)
 	);
