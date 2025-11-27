@@ -1,5 +1,9 @@
-import {db} from "../db/connexion_db.js";
+import { db } from "../db/connexion_db.js";
 
 export const getAllPizzas = async (limit = null) => {
     return await db.getAllPizzas(limit);
+};
+
+export const getAllPizzasById = async (id) => {
+    return await db.getPizzaById
 };
