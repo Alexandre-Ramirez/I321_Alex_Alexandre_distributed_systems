@@ -25,7 +25,7 @@ export const fetchPizzasById = async (req, res, next) => {
         }
         const pizza = await getPizzasById(id);
 
-        if (!pizza()) {
+        if (!pizza) {
             throw {status: 404, message: "Pizza not found"};
         }
 

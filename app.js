@@ -3,7 +3,7 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import createHttpError from "http-errors";
+import createError from "http-errors";  // rename import
 
 import pizzasRoute from "./routes/pizzasRoute.js";
 import pizzaOfTheMomentRoute from "./routes/pizzaOfTheMomentRoute.js";
@@ -41,6 +41,8 @@ app.use(function(err, req, res) {
 });
 
 //module.exports = app;
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000')
+app.listen(3001, () => {
+    console.log('Server running on http://localhost:3001')
 });
+
+export default app;
