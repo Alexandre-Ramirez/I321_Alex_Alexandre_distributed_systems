@@ -16,13 +16,11 @@ DROP TABLE IF EXISTS pizzas;
 CREATE TABLE pizzas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
-<<<<<<< HEAD
     description TEXT,
     imageUrl TEXT,
-	price DECIMAL(5,2) NOT NULL
+	price DECIMAL(5,2) NOT NULL,
     -- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     -- updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-=======
     description text,
     imageUrl text,
 	price DECIMAL(5,2) NOT NULL
@@ -41,7 +39,6 @@ create table pizza_of_the_moment (
     price decimal(5,2) not null,
     start_date date not null,
     end_date date
->>>>>>> feature/create_pizza
 );
 	
 -- ==========================================================
