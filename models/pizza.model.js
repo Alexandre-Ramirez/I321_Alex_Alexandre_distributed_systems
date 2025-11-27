@@ -6,4 +6,4 @@ export const getAllPizzas = async (limit = null) => {
 
 export const getAllPizzasById = async (id) => {
     return await db.getPizzaById
-}
+};
