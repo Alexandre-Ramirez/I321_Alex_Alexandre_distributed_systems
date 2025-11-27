@@ -4,6 +4,6 @@ export const getAllPizzas = async (limit = null) => {
     return await db.getAllPizzas(limit);
 };
 
-export const getAllPizzasById = async (id) => {
+export const getPizzasById = async (id) => {
     return await db.getPizzaById
 };

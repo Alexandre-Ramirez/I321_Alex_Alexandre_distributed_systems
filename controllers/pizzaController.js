@@ -1,21 +1,36 @@
-// controllers/pizzaController.js
-import { getAllPizzas, get }
+import { getAllPizzas, getPizzasById} from "../models/pizza.model";
+import { isValidInteger } from "../utils/helper.mjs"
 
-const pizzas = [
-    { id: 1, name: "Margherita", price: 12 },
-    { id: 2, name: "Reine", price: 14 },
-    { id: 3, name: "4 Fromages", price: 15 },
-];
-
-// Afficher la liste des pizzas
-exports.listPizzas = (req, res) => {
-    res.render("pizzas", { pizzas });
+export const fetchAllPizzas = async (req, res, next) => {
+    try {
+        const limit = req.query.limit ? parseInt(req.query.limit, 10) : null;
+        if (limit !== null && (!isValidInteger(limit) || limit <= 0)) {
+            throw {status: 400, message: 'Limit must be a positive number.'};
+        }
+        const pizzas = await getAllPizzas(limit);
+        if (!pizzas || pizzas.length === 0) {
+            throw {status: 404, message: 'No pizzas found.'};
+        }
+        res.status(200).json(pizzas);
+    } catch (error) {
+        next(error);
+    }
 };
 
-// Afficher une pizza spécifique
-exports.getPizza = (req, res) => {
-    const pizza = pizzas.find(p => p.id === parseInt(req.params.id));
-    if (!pizza) return res.status(404).send("Pizza non trouvée");
-    res.render("pizzaDetail", { pizza });
-};
+export const fetchPizzasById = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        if (!isValidInteger(id)) {
+            throw {status: 400, message: "Invalid id"};
+        }
+        const pizza = await getPizzasById(id);
 
+        if (!pizza()) {
+            throw {status: 404, message: "Pizza not found"};
+        }
+
+        res.status(200).json(pizza);
+    } catch (error) {
+        next(error);
+    }
+};
