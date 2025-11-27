@@ -1,4 +1,4 @@
-// routes/pizzas.js
+// routes/pizzasRoute.js
 
 const express = require('express');
 const router = express.Router();

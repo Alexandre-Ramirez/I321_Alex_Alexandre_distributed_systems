@@ -7,7 +7,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const pizzasRouter = require('./routes/pizzas');
+const pizzasRouter = require('./routes/pizzasRoute');
 
 const app = express();
 
