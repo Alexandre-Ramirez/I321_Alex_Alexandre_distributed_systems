@@ -11,6 +11,6 @@ router.get('/', pizzaController.listPizzas);
 router.get('/:id', pizzaController.getPizza);
 
 // Pizza ingredients
-router.get("/:id/ingredients", getIngredientsByPizza);
+router.get("/:id/ingredients", pizzaController.getIngredientsByPizza);
 
 module.exports = router;
