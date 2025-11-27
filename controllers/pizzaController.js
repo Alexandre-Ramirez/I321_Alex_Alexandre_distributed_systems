@@ -1,4 +1,5 @@
 // controllers/pizzaController.js
+import { getAllPizzas, get }
 
 const pizzas = [
     { id: 1, name: "Margherita", price: 12 },
@@ -17,3 +18,4 @@ exports.getPizza = (req, res) => {
     if (!pizza) return res.status(404).send("Pizza non trouvée");
     res.render("pizzaDetail", { pizza });
 };
+
