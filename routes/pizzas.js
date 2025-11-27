@@ -10,4 +10,7 @@ router.get('/', pizzaController.listPizzas);
 // Détail d’une pizza
 router.get('/:id', pizzaController.getPizza);
 
+// Pizza ingredients
+router.get("/:id/ingredients", getIngredientsByPizza);
+
 module.exports = router;
