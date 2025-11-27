@@ -1,7 +1,7 @@
-import { getAllPizzas, getPizzasById} from "../models/pizza.model.js";
+import { getAllPizzas, getPizzasById, getPizzaIngredients} from "../models/pizza.model.js";
 import { isValidInteger } from "../utils/helper.mjs"
 
-export const getIngredientsByPizza = async (req, res) => {
+export const fetchPizzaIngredients = async (req, res) => {
     try {
         const pizzaId = req.params.id;
         const ingredients = await getPizzaIngredients(pizzaId);
@@ -15,7 +15,6 @@ export const getIngredientsByPizza = async (req, res) => {
         res.status(500).json({ error: "Erreur serveur." });
     }
 };
-
 
 export const fetchAllPizzas = async (req, res, next) => {
     try {

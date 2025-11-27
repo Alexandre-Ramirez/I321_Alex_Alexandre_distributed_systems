@@ -1,5 +1,5 @@
 import express from 'express'
-import { fetchAllPizzas, fetchPizzasById } from "../controllers/pizzaController.js";
+import { fetchAllPizzas, fetchPizzasById, fetchPizzaIngredients} from "../controllers/pizzaController.js";
 
 const router = express.Router();
 
@@ -8,5 +8,7 @@ router.get('/', fetchAllPizzas);
 
 // Détail d’une pizza
 router.get('/:id', fetchPizzasById);
+
+router.get("/:id/ingredients", fetchPizzaIngredients);
 
 export default router;
