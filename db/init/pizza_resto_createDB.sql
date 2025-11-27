@@ -13,6 +13,7 @@ USE pizza_resto;
 -- Table : pizzas
 -- ==========================================================
 DROP TABLE IF EXISTS pizzas;
+
 CREATE TABLE pizzas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
