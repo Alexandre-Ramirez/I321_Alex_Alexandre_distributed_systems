@@ -1,4 +1,4 @@
-import { getAllIngredients, getIngredientById} from "../models/ingredient.model";
+import { getAllIngredients, getIngredientById} from "../models/ingredient.model.js";
 import { isValidInteger } from "../utils/helper.mjs"
 
 export const fetchAllIngredients = async (req, res, next) => {

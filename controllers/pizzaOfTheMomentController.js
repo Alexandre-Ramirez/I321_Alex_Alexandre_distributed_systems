@@ -1,4 +1,4 @@
-import { getAllPizzaOfTheMoments, getPizzasOfTheMomentById} from "../models/pizza_of_the_moment.model";
+import { getAllPizzaOfTheMoments, getPizzasOfTheMomentById} from "../models/pizzaOfTheMoment.model.js";
 import { isValidInteger } from "../utils/helper.mjs"
 
 export const fetchAllPizzaOfTheMoments = async (req, res, next) => {
