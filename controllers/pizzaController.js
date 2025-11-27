@@ -1,4 +1,4 @@
-import { getAllPizzas, getPizzasById} from "../models/pizza.model";
+import { getAllPizzas, getPizzasById} from "../models/pizza.model.js";
 import { isValidInteger } from "../utils/helper.mjs"
 
 export const fetchAllPizzas = async (req, res, next) => {
@@ -25,7 +25,7 @@ export const fetchPizzasById = async (req, res, next) => {
         }
         const pizza = await getPizzasById(id);
 
-        if (!pizza()) {
+        if (!pizza) {
             throw {status: 404, message: "Pizza not found"};
         }
 

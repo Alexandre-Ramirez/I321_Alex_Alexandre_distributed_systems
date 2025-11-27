@@ -1,4 +1,4 @@
-import { getAllIngredients, getIngredientById} from "../models/ingredient.model";
+import { getAllIngredients, getIngredientById} from "../models/ingredient.model.js";
 import { isValidInteger } from "../utils/helper.mjs"
 
 export const fetchAllIngredients = async (req, res, next) => {
@@ -25,7 +25,7 @@ export const fetchIngredientById = async (req, res, next) => {
         }
         const ingredient = await getIngredientById(id);
 
-        if (!ingredient()) {
+        if (!ingredient) {
             throw {status: 404, message: "Ingredient not found"};
         }
 

@@ -24,7 +24,7 @@ const db = {
     getAllPizzas: async (limit) => {
         let con;
         try {
-            con = await mysql.connectToDB();
+            con = await db.connectToDB();
             let request = ' select * from pizzas';
             if (limit != null) {
                 request = `${request} limit ${limit}`;
@@ -57,7 +57,7 @@ const db = {
     getAllIngredients: async (limit) => {
         let con;
         try {
-            con = await mysql.connectToDB();
+            con = await db.connectToDB();
             let request = ' select * from ingredients';
             if (limit != null) {
                 request = `${request} limit ${limit}`;
@@ -90,7 +90,7 @@ const db = {
     getAllPizzaOfTheMoments: async (limit) => {
         let con;
         try {
-            con = await mysql.connectToDB();
+            con = await db.connectToDB();
             let request = ' select * from pizza_of_the_moment';
             if (limit != null) {
                 request = `${request} limit ${limit}`;
