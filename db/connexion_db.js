@@ -54,6 +54,26 @@ const db = {
         }
     },
 
+    getPizzaIngredient: async (pizza_id) => {
+        let con;
+        try {
+            con = await db.connectToDB();
+            const [rows] = await con.query(
+                `SELECT i.*
+                FROM ingredients i
+                JOIN pizzas_ingredients pi ON pi.ingredient_id = i.id
+                WHERE pi.pizza_id = ?`,
+                [pizza_id]
+            );
+            return rows;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        } finally {
+            if (con) {await db.disconnectFromDatabase(con);}
+        }
+    },
+
     getAllIngredients: async (limit) => {
         let con;
         try {
