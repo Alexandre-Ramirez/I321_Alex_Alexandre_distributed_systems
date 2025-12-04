@@ -5,7 +5,6 @@ export async function getAllIngredients() {
     return rows;
 }
 
-
 export const getAllIngredients = async (limit = null) => {
     return await db.getAllIngredients(limit);
 };
@@ -13,3 +12,9 @@ export const getAllIngredients = async (limit = null) => {
 export const getIngredientById = async (id) => {
     return await db.getIngredientById(id)
 };
+
+export const postIngredient = {
+    create: async (data) => {
+
+    }
+}
