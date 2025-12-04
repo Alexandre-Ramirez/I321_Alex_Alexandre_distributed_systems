@@ -29,3 +29,11 @@ function isValidInteger(value) {
 }
 
 export { isValidInteger };
+
+function validateIngredientData(name, gramme, country) {
+    if (!name || !gramme || country === undefined) {
+        return "Les champs name, gramme et country sont obligatoires.";
+    }
+}
+
+export { validateIngredientData };

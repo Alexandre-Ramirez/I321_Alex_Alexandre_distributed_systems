@@ -1,5 +1,5 @@
 import { getAllIngredients, getIngredientById, postIngredient} from "../models/ingredient.model";
-import { isValidInteger } from "../utils/helper.mjs"
+import {isValidInteger, validateIngredientData} from "../utils/helper.mjs"
 import {db} from "../db/connexion_db";
 
 
@@ -38,14 +38,20 @@ export const fetchIngredientById = async (req, res, next) => {
 };
 
 export const postIngredient = async (req, res, next) => {
+    try {
+
     const {name, gramme, country} = req.body;
+    if (!validateIngredientData(name, gramme, country)) {
+        throw {status: 400, message: 'Data error'};
+    }
 
-    const [response] = await db('ingredients')
-    ('INSERT INTO ingredients (name, gramme, country) VALUES (?,?,?)',
-        [name, gramme, country]);
+    const ingredient = await postIngredient (name, gramme, country);
 
-        const newIngredient = {id: result.insertId, name, gramme, country};
-        res.status(200).json(newIngredient);
+        const newIngredient =
+            {id: insertId, name, gramme, country};
+
+        res.status(201).json(newIngredient);
+
     }
     catch (error) {
         next(error);

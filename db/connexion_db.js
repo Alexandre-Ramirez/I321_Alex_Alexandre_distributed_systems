@@ -1,7 +1,8 @@
 import mysql from 'mysql2/promise'
 
-const db = {
+export const db = {
 
+//Connect to db
     connectToDB: async () => {
         try {
             const connection = await mysql.createConnection({
@@ -21,105 +22,7 @@ const db = {
 
     },
 
-    getAllPizzas: async (limit) => {
-        let con;
-        try {
-            con = await mysql.connectToDB();
-            let request = ' select * from pizzas';
-            if (limit != null) {
-                request = `${request} limit ${limit}`;
-            }
-
-            const [rows] = await con.query(request);
-            return rows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
-    getPizzaById: async (id) => {
-        let con;
-        try {
-            con = await db.connectToDB();
-            const [rows] = await con.query(' select * from pizzas where id = ?', [id]);
-            return rows[0];
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
-    getAllIngredients: async (limit) => {
-        let con;
-        try {
-            con = await mysql.connectToDB();
-            let request = ' select * from ingredients';
-            if (limit != null) {
-                request = `${request} limit ${limit}`;
-            }
-
-            const [rows] = await con.query(request);
-            return rows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
-    getIngredientById: async (id) => {
-        let con;
-        try {
-            con = await db.connectToDB();
-            const [rows] = await con.query(' select * from ingredients where id = ?', [id]);
-            return rows[0];
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
-    getAllPizzaOfTheMoments: async (limit) => {
-        let con;
-        try {
-            con = await mysql.connectToDB();
-            let request = ' select * from pizza_of_the_moment';
-            if (limit != null) {
-                request = `${request} limit ${limit}`;
-            }
-
-            const [rows] = await con.query(request);
-            return rows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
-    getPizzasOfTheMomentById: async (id) => {
-        let con;
-        try {
-            con = await db.connectToDB();
-            const [rows] = await con.query(' select * from ingredients where id = ?', [id]);
-            return rows[0];
-        } catch (err) {
-            console.log(err);
-            throw err;
-        } finally {
-            if (con) {await db.disconnectFromDatabase(con);}
-        }
-    },
-
+//Disconnect to db
     disconnectFromDatabase: async (connection) => {
         try {
             await connection.end();
@@ -128,7 +31,22 @@ const db = {
             console.error('Erreur lors de la déconnexion de la base de données :', error);
             throw error;
         }
+    },
+
+//Generic SQL request
+    query: async (sql, params = []) => {
+        let con;
+        try {
+            con = await db.connectToDB();
+            const [rows] = await con.query(sql, params);
+            return rows;
+        } catch (err) {
+            console.error(err);
+            throw err;
+        } finally {
+            if (con) await db.disconnectFromDatabase(con);
+        }
     }
-}
+};
 
 export { db }

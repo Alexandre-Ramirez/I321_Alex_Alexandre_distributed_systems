@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const pizzaController = require('../controllers/pizzaController');
 const ingredientController = require('../controllers/ingredientController');
-const {postIngredient} = require("../models/ingredient.model");
+const {postIngredient} = require('../controllers/ingredientController');
 
 // Liste des pizzas
 router.get('/', pizzaController.listPizzas);
@@ -15,6 +15,6 @@ router.get('/:id', pizzaController.getPizza);
 // Pizza ingredients
 router.get("/:id/ingredients", pizzaController.getIngredientsByPizza);
 
-router.post('/posts', postIngredient.create);
+router.post('/ingredients', postIngredient);
 
 module.exports = router;

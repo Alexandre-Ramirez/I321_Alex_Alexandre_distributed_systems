@@ -1,20 +1,23 @@
 import { db } from "../db/connexion_db.js";
 
-export async function getAllIngredients() {
-    const [rows] = await db.execute("SELECT * FROM ingredients");
-    return rows;
-}
+export const ingredientModel = {
 
-export const getAllIngredients = async (limit = null) => {
-    return await db.getAllIngredients(limit);
-};
+    getAllIngredients: async (limit = null) => {
+        let sql = "SELECT * FROM ingredients";
+        if (limit) sql += " LIMIT ?";
+        return limit ? await db.query(sql, [limit]) : await db.query(sql);
+    },
 
-export const getIngredientById = async (id) => {
-    return await db.getIngredientById(id)
-};
+    getIngredientById: async (id) => {
+        const rows = await db.query("SELECT * FROM ingredients WHERE id = ?", [id]);
+        return rows[0];
+    },
 
-export const postIngredient = {
-    create: async (data) => {
-
+    postIngredient: async (name, gramme, country) => {
+        const result = await db.query(
+            "INSERT INTO ingredients (name, gramme, country) VALUES (?, ?, ?)",
+            [name, gramme, country]
+        );
+        return result.insertId;
     }
-}
+};
