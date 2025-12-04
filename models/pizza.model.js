@@ -20,5 +20,13 @@ export const pizzaModel = {
     getPizzaById: async (id) => {
         const rows = await db.query("SELECT * FROM pizzas WHERE id = ?", [id]);
         return rows[0];
+    },
+
+    postPizza: async (name, description, imageUrl, price) => {
+        const result = await db.query(
+            "INSERT INTO pizzas (name, description, imageUrl, price) VALUES (?, ?, ?, ?)",
+            [name, description, imageUrl, price]
+        );
+        return result.insertId;
     }
 };

@@ -37,3 +37,11 @@ function validateIngredientData(name, gramme, country) {
 }
 
 export { validateIngredientData };
+
+function validatePizzaData(name, description, imageUrl, price) {
+    if (!name || !description || imageUrl || price === undefined) {
+        return "Les champs name, description, imageUrl et price sont obligatoires.";
+    }
+}
+
+export { validatePizzaData };

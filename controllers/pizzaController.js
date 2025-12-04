@@ -1,5 +1,5 @@
 import { getAllPizzas, getPizzasById} from "../models/pizza.model.js";
-import { isValidInteger } from "../utils/helper.mjs"
+import {isValidInteger, validatePizzaData} from "../utils/helper.mjs"
 
 export const getIngredientsByPizza = async (req, res) => {
     try {
@@ -46,6 +46,26 @@ export const fetchPizzasById = async (req, res, next) => {
         }
 
         res.status(200).json(pizza);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const postPizza = async (req, res, next) => {
+    try {
+
+        const {name, description, imageUrl, price} = req.body;
+        if (!validatePizzaData(name, description, imageUrl, price)) {
+            throw {status: 400, message: 'Data error'};
+        }
+
+        const Pizza = await postPizza(name, description, imageUrl, price);
+
+        const newPizza =
+            {id: insertId, name, description, imageUrl, price};
+
+        res.status(201).json(newPizza);
+
     } catch (error) {
         next(error);
     }
