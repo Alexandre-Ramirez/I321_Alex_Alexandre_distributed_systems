@@ -1,53 +1,19 @@
-import Database from 'better-sqlite3';
+// db/connexion_db.js
+const Database = require('better-sqlite3');
+const path = require('path');
 
-const db = new Database('./init/pizzas.db'); // Votre fichier .db
+const db = new Database(path.join(__dirname, 'init/pizzas.db'));
 
-export default db;
-
-//Connect to db
-    connectToDB: async () => {
-        try {
-            const connection = await mysql.createConnection({
-                host: process.env.DB_HOST,
-                user: process.env.DB_USER,
-                password: process.env.DB_PASSWORD,
-                port: process.env.DB_PORT,
-                database: process.env.DB_NAME,
-            });
-            console.log("Connected to DB");
-            return connection;
-        } catch (error) {
-            console.error("Error connexion DaaBase", error);
-            error.status = 403;
-            throw error;
-        }
-
-    },
-
-//Disconnect to db
-    disconnectFromDatabase: async (connection) => {
-        try {
-            await connection.end();
-            console.log('Déconnexion de la base de données réussie');
-        } catch (error) {
-            console.error('Erreur lors de la déconnexion de la base de données :', error);
-            throw error;
-        }
-    },
-
-//Generic SQL request
-    query: async (sql, params = []) => {
-        let con;
-        try {
-            con = await db.connectToDB();
-            const [rows] = await con.query(sql, params);
-            return rows;
-        } catch (err) {
-            console.error(err);
-            throw err;
-        } finally {
-            if (con) await db.disconnectFromDatabase(con);
-        }
-    }
+// Méthode générique SELECT
+db.select = (sql, params = []) => {
+    const stmt = db.prepare(sql);
+    return stmt.all(params);
 };
 
+// Méthode générique INSERT / UPDATE / DELETE
+db.runQuery = (sql, params = []) => {
+    const stmt = db.prepare(sql);
+    return stmt.run(params);
+};
+
+module.exports = db;
