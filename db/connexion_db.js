@@ -1,6 +1,8 @@
-import mysql from 'mysql2/promise'
+import Database from 'better-sqlite3';
 
-export const db = {
+const db = new Database('./init/pizzas.db'); // Votre fichier .db
+
+export default db;
 
 //Connect to db
     connectToDB: async () => {
@@ -49,4 +51,3 @@ export const db = {
     }
 };
 
-export { db }
