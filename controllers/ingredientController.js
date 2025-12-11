@@ -1,5 +1,6 @@
 const { getAllIngredients, getIngredientById, postIngredient } = require('../models/ingredient.model');
 const { isValidInteger, validateIngredientData } = require('../utils/helper.mjs');
+const db = require('../db/connexion_db');
 
 const ingredientController = {
 
@@ -46,7 +47,61 @@ const ingredientController = {
         } catch (error) {
             next(error);
         }
+    },
+
+    deleteIngredient: (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            if (!isValidInteger(id)) {
+                throw { status: 400, message: "Invalid ID" };
+            }
+
+            const ingredient = getIngredientById(id);
+            if (!ingredient) {
+                throw { status: 404, message: "Ingredient not found" };
+            }
+
+            const stmt = db.prepare("DELETE FROM ingredients WHERE id = ?");
+            stmt.run(id);
+
+            res.status(200).json({ message: `Ingredient with id ${id} deleted successfully` });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    updateIngredient: (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const { name, gramme, country } = req.body;
+
+            if (!isValidInteger(id)) {
+                throw { status: 400, message: "Invalid ID" };
+            }
+
+            const ingredient = getIngredientById(id);
+            if (!ingredient) {
+                throw { status: 404, message: "Ingredient not found" };
+            }
+
+            // Validation minimale
+            if (!name || !gramme || country === undefined) {
+                throw { status: 400, message: "All fields (name, gramme, country) are required" };
+            }
+
+            const stmt = db.prepare(
+                "UPDATE ingredients SET name = ?, gramme = ?, country = ? WHERE id = ?"
+            );
+            stmt.run(name, gramme, country, id);
+
+            res.status(200).json({ id, name, gramme, country });
+        } catch (error) {
+            next(error);
+        }
     }
+
+
 
 };
 

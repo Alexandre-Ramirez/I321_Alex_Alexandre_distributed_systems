@@ -14,4 +14,11 @@ router.get('/:id/ingredients', pizzaController.getIngredientsByPizza);
 // Ajout d'une Pizza
 router.post('/', pizzaController.postPizza);
 
+//Modification du prix d'une pizza
+router.patch('/:id/price', pizzaController.updatePizzaPrice);
+
+//Suppression d'une pizza
+router.delete('/:id', pizzaController.deletePizza);
+
+
 module.exports = router;

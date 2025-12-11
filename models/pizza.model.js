@@ -29,8 +29,13 @@ const pizzaModel = {
         );
         const info = stmt.run(name, description, imageUrl, price);
         return info.lastInsertRowid;
-    }
+    },
 
+    updatePizzaPrice: (id, price) => {
+        const stmt = db.prepare("UPDATE pizzas SET price = ? WHERE id = ?",)
+        const info = stmt.run(price, id);
+        return info.changes; // 1 = modifié
+    }
 
 };
 
