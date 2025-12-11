@@ -1,4 +1,4 @@
-const { getAllPizzas, getPizzaById, getPizzaIngredients, postPizza } = require('../models/pizza.model');
+const { getAllPizzas, getPizzaById, getPizzaIngredients, postPizza, postIngredient } = require('../models/pizza.model');
 const { isValidInteger, validatePizzaData } = require('../utils/helper.mjs');
 
 const pizzaController = {
@@ -48,16 +48,20 @@ const pizzaController = {
 
     postPizza: (req, res, next) => {
         try {
-            const { name, description, imageUrl, price } = req.body;
-            if (!validatePizzaData(name, description, imageUrl, price)) {
+            const { name, description, price, imageUrl = null } = req.body; // imageUrl facultatif
+
+            if (!validatePizzaData(name, description, price, imageUrl)) {
                 throw { status: 400, message: 'Data error' };
             }
-            const id = postPizza(name, description, imageUrl, price);
+
+            const id = postPizza(name, description, price, imageUrl);
             res.status(201).json({ id, name, description, imageUrl, price });
+
         } catch (error) {
             next(error);
         }
     }
+
 
 };
 

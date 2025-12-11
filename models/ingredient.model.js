@@ -1,18 +1,23 @@
-const db = require('../db/connexion_db');
+// models/ingredient.model.js
+const db = require("../db/connexion_db");
 
-const pizzaMomentModel = {
+const ingredientModel = {
 
-    getAllPizzaOfTheMoments: (limit = null) => {
-        let sql = "SELECT * FROM pizza_of_the_moment";
+    getAllIngredients: (limit = null) => {
+        let sql = "SELECT * FROM ingredients";
         if (limit) sql += " LIMIT ?";
-        return limit ? db.select(sql, [limit]) : db.select(sql);
+        return limit ? db.prepare(sql).all(limit) : db.prepare(sql).all();
     },
 
-    getPizzasOfTheMomentById: (id) => {
-        const rows = db.select("SELECT * FROM pizza_of_the_moment WHERE id = ?", [id]);
-        return rows[0];
-    }
+    getIngredientById: (id) => {
+        return db.prepare("SELECT * FROM ingredients WHERE id = ?").get(id);
+    },
 
+    postIngredient: (name, gramme, country) => {
+        const stmt = db.prepare("INSERT INTO ingredients (name, gramme, country) VALUES (?, ?, ?)");
+        const info = stmt.run(name, gramme, country);
+        return info.lastInsertRowid;
+    }
 };
 
-module.exports = pizzaMomentModel;
+module.exports = ingredientModel;

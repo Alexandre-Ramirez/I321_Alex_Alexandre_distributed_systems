@@ -23,13 +23,14 @@ const pizzaModel = {
         return rows[0];
     },
 
-    postPizza: (name, description, imageUrl, price) => {
-        const result = db.runQuery(
-            "INSERT INTO pizzas (name, description, imageUrl, price) VALUES (?, ?, ?, ?)",
-            [name, description, imageUrl, price]
+    postPizza: (name, description, price, imageUrl = null) => {
+        const stmt = db.prepare(
+            "INSERT INTO pizzas (name, description, imageUrl, price) VALUES (?, ?, ?, ?)"
         );
-        return result.lastInsertRowid;
+        const info = stmt.run(name, description, imageUrl, price);
+        return info.lastInsertRowid;
     }
+
 
 };
 
