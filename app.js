@@ -7,7 +7,7 @@ const logger = require('morgan');
 
 const pizzasRouter = require('./routes/pizzas');
 const ingredientsRouter = require('./routes/ingredients');
-
+const pizzaOfTheMomentsRouter = require('./routes/pizzaOfTheMomentRoute');
 
 const app = express();
 
@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/pizzas', pizzasRouter);
-app.use("/pizza", pizzasRouter);
 app.use('/ingredients', ingredientsRouter);
+app.use('/pizza-du-jour', pizzaOfTheMomentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
