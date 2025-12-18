@@ -5,9 +5,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const pizzasRouter = require('./routes/pizzas');
+const ingredientsRouter = require('./routes/ingredients');
+const pizzaOfTheMomentsRouter = require('./routes/pizzaOfTheMomentRoute');
 
 const app = express();
 
@@ -21,9 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/pizzas', pizzasRouter);
+app.use('/ingredients', ingredientsRouter);
+app.use('/pizza-du-jour', pizzaOfTheMomentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -31,14 +31,14 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function(err, req, res, next) {
+    console.error(err); // utile pour debug
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+        error: req.app.get('env') === 'development' ? err : {}
+    });
 });
+
 
 module.exports = app;

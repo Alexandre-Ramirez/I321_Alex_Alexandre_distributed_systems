@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app.js');
 var debug = require('debug')('i321-alex-alexandre-distributed-systems:server');
 var http = require('http');
 
@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '3000');
 console.log(`Application ${process.env.APP_NAME} démarrée sur le port ${port}`);
 app.set('port', port);
 
