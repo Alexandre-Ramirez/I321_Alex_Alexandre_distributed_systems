@@ -5,11 +5,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const setupSwagger = require('./swagger');
+
 const pizzasRouter = require('./routes/pizzas');
 const ingredientsRouter = require('./routes/ingredients');
 const pizzaOfTheMomentsRouter = require('./routes/pizzaOfTheMomentRoute');
 
 const app = express();
+
+setupSwagger(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
