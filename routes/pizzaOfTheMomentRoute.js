@@ -1,12 +1,21 @@
 // routes/pizzaOfTheMomentRoute.js
-import {fetchAllPizzaOfTheMoments,fetchPizzasOfTheMomentById} from "../controllers/pizzaOfTheMomentController.js";
-import express from "express";
-
+const express = require('express');
+const {
+    fetchAllPizzaOfTheMoments,
+    fetchPizzasOfTheMomentById,
+    createPizzasOfTheMoment,
+    patchPizzasOfTheMoment,
+} = require("../controllers/pizzaOfTheMomentController.js");
 const router = express.Router();
 
-// Getter pizza du moment
+// Get
 router.get('/', fetchAllPizzaOfTheMoments);
-
 router.get('/:id', fetchPizzasOfTheMomentById);
 
-export default router;
+// POST
+router.post('/', createPizzasOfTheMoment);
+
+// PUT
+router.put('/:id', patchPizzasOfTheMoment);
+
+module.exports = router;

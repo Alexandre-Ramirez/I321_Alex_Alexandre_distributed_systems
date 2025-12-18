@@ -1,4 +1,4 @@
-const { getAllPizzaOfTheMoments, getPizzasOfTheMomentById } = require('../models/pizza_of_the_moment.model');
+const { getAllPizzaOfTheMoments, getPizzasOfTheMomentById, createPizzasOfTheMoment, updatePizzasOfTheMoment } = require('../models/pizzaOfTheMoment.model');
 const { isValidInteger } = require('../utils/helper.mjs');
 
 const pizzaMomentController = {
@@ -30,6 +30,62 @@ const pizzaMomentController = {
                 throw { status: 404, message: "pizza_of_the_moment not found" };
             }
             res.status(200).json(pizzaOfTheMoment);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    createPizzasOfTheMoment: (req, res, next) => {
+        try {
+            const { name,description,quantity,imageUrl,price,start_date,end_date } = req.body;
+
+            if (!price || !name || !start_date || !end_date) {
+                throw { status: 400, message: "Missing or invaliding fields" };
+            }
+
+            const result = createPizzasOfTheMoment({
+                name,
+                description,
+                quantity,
+                imageUrl,
+                price,
+                start_date,
+                end_date
+            });
+
+            res.status(201).json({
+                message: 'Successfully created pizza of the Moment',
+                id: result.id
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    patchPizzasOfTheMoment : (req, res, next) => {
+        try {
+            const { id } = req.params;
+            if (!isValidInteger(id)) {
+                throw { status: 400, message: "Invalid id" };
+            }
+
+            const existing = getPizzasOfTheMomentById(id);
+            if (!existing) throw { status: 404, message: "pizza_of_the_moment not found" };
+
+            // Merge des données existantes avec celles reçues
+            const dataToUpdate = {
+                name: req.body.name ?? existing.name,
+                description: req.body.description ?? existing.description,
+                quantity: req.body.quantity ?? existing.quantity,
+                imageUrl: req.body.imageUrl ?? existing.imageUrl,
+                price: req.body.price ?? existing.price,
+                start_date: req.body.start_date ?? existing.start_date,
+                end_date: req.body.end_date ?? existing.end_date
+            };
+
+            const changes = updatePizzasOfTheMoment(id, dataToUpdate);
+            res.status(200).json({ message: "pizza_of_the_moment updated" });
+
         } catch (error) {
             next(error);
         }
