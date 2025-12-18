@@ -1,5 +1,6 @@
 const { getAllPizzaOfTheMoments, getPizzasOfTheMomentById, createPizzasOfTheMoment, updatePizzasOfTheMoment } = require('../models/pizzaOfTheMoment.model');
 const { isValidInteger } = require('../utils/helper.mjs');
+const { validatePizza } = require('../utils/validatePizzaFields.mjs');
 
 const pizzaMomentController = {
 
@@ -37,11 +38,12 @@ const pizzaMomentController = {
 
     createPizzasOfTheMoment: (req, res, next) => {
         try {
-            const { name,description,quantity,imageUrl,price,start_date,end_date } = req.body;
-
-            if (!price || !name || !start_date || !end_date) {
-                throw { status: 400, message: "Missing or invaliding fields" };
+            const errors = validatePizza(req.body);
+            if (errors.length > 0) {
+                throw { status: 400, message: errors.join(', ') };
             }
+
+            const { name,description,quantity,imageUrl,price,start_date,end_date } = req.body;
 
             const result = createPizzasOfTheMoment({
                 name,
@@ -89,7 +91,27 @@ const pizzaMomentController = {
         } catch (error) {
             next(error);
         }
+    },
+
+    updatePizzasOfTheMomentFull: (req, res, next) => {
+        try {
+            const { id } = req.params;
+            if (!isValidInteger(id)) throw { status: 400, message: "Invalid id" };
+
+            const existing = getPizzasOfTheMomentById(id);
+            if (!existing) throw { status: 404, message: "pizza_of_the_moment not found" };
+
+            const errors = validatePizza(req.body);
+            if (errors.length > 0) throw { status: 400, message: errors.join(', ') };
+
+            const changes = updatePizzasOfTheMoment(id, req.body);
+            res.status(200).json({ message: "pizza_of_the_moment updated" });
+
+        } catch (error) {
+            next(error);
+        }
     }
+
 
 };
 
