@@ -1,4 +1,4 @@
-use pizza_resto;
+
 
 INSERT INTO ingredients (name, gramme, country) VALUES
 ('Mozzarella', 100, 'Italie'),

@@ -1,9 +1,18 @@
-import { db } from "../db/connexion_db.js";
+const db = require('../db/connexion_db');
 
-export const getAllIngredients = async (limit = null) => {
-    return await db.getAllIngredients(limit);
+const pizzaMomentModel = {
+
+    getAllPizzaOfTheMoments: (limit = null) => {
+        let sql = "SELECT * FROM pizza_of_the_moment";
+        if (limit) sql += " LIMIT ?";
+        return limit ? db.select(sql, [limit]) : db.select(sql);
+    },
+
+    getPizzasOfTheMomentById: (id) => {
+        const rows = db.select("SELECT * FROM pizza_of_the_moment WHERE id = ?", [id]);
+        return rows[0];
+    }
+
 };
 
-export const getIngredientById = async (id) => {
-    return await db.getIngredientById(id)
-};
+module.exports = pizzaMomentModel;
