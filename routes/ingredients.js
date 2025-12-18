@@ -22,3 +22,104 @@ router.delete('/:id', ingredientController.deleteIngredient);
 router.put('/:id', ingredientController.updateIngredient);
 
 module.exports = router;
+
+/**
+ * @swagger
+ * /ingredients:
+ *   get:
+ *     summary: Liste tous les ingrédients
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Liste des ingrédients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Ingredient'
+ *       404:
+ *         description: Aucun ingrédient trouvé
+ *
+ *   post:
+ *     summary: Crée un nouvel ingrédient
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Ingredient'
+ *     responses:
+ *       201:
+ *         description: Ingrédient créé
+ */
+/**
+ * @swagger
+ * /ingredients/{id}:
+ *   get:
+ *     summary: Récupère un ingrédient par ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Ingrédient trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
+ *       404:
+ *         description: Ingrédient non trouvé
+ *
+ *   put:
+ *     summary: Met à jour un ingrédient
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Ingredient'
+ *     responses:
+ *       200:
+ *         description: Ingrédient mis à jour
+ *
+ *   delete:
+ *     summary: Supprime un ingrédient
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Ingrédient supprimé
+ */
+/**
+ * @swagger
+ * /ingredients/{id}/ingredients:
+ *   get:
+ *     summary: Récupère les ingrédients d'une pizza (optionnel)
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Liste des ingrédients pour une pizza
+ */
