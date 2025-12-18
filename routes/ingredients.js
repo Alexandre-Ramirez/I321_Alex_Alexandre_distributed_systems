@@ -15,4 +15,10 @@ router.post('/', ingredientController.postIngredient);
 // GET des ingrédients liés à une pizza (optionnel)
 router.get('/:id/ingredients', pizzaController.getIngredientsByPizza);
 
+// DELETE Suppression d'une pizza
+router.delete('/:id', ingredientController.deleteIngredient);
+
+// PUT modification d'un ingrédient
+router.put('/:id', ingredientController.updateIngredient);
+
 module.exports = router;
