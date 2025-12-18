@@ -1,9 +1,20 @@
-import { db } from "../db/connexion_db.js";
+// models/pizza_of_the_moment.model.js
+const db = require("../db/connexion_db");
 
-export const getAllPizzaOfTheMoments = async (limit = null) => {
-    return await db.getAllPizzaOfTheMoments(limit);
+const pizzaMomentModel = {
+
+    getAllPizzaOfTheMoments: (limit = null) => {
+        let sql = "SELECT * FROM pizza_of_the_moment";
+        if (limit) sql += " LIMIT ?";
+        // better-sqlite3 est synchrone
+        return limit ? db.prepare(sql).all(limit) : db.prepare(sql).all();
+    },
+
+    getPizzasOfTheMomentById: (id) => {
+        const row = db.prepare("SELECT * FROM pizza_of_the_moment WHERE id = ?").get(id);
+        return row;
+    }
+
 };
 
-export const getPizzasOfTheMomentById = async (id) => {
-    return await db.getPizzasOfTheMomentById(id)
-};
+module.exports = pizzaMomentModel;

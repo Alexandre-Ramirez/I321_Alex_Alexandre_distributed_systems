@@ -29,3 +29,19 @@ function isValidInteger(value) {
 }
 
 export { isValidInteger };
+
+function validateIngredientData(name, gramme, country) {
+    if (!name || !gramme || country === undefined) {
+        return "Les champs name, gramme et country sont obligatoires.";
+    }
+}
+
+export { validateIngredientData };
+
+function validatePizzaData(name, description, imageUrl, price) {
+    if (!name || !description || imageUrl || price === undefined) {
+        return "Les champs name, description, imageUrl et price sont obligatoires.";
+    }
+}
+
+export { validatePizzaData };
