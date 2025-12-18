@@ -3,7 +3,7 @@ const { isValidInteger, validateIngredientData } = require('../utils/helper.mjs'
 
 const ingredientController = {
 
-    fetchAllIngredients: (req, res, next) => {
+    getAllIngredients: (req, res, next) => {
         try {
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : null;
             if (limit !== null && (!isValidInteger(limit) || limit <= 0)) {
@@ -19,7 +19,7 @@ const ingredientController = {
         }
     },
 
-    fetchIngredientById: (req, res, next) => {
+    getIngredientById: (req, res, next) => {
         try {
             const { id } = req.params;
             if (!isValidInteger(id)) {
