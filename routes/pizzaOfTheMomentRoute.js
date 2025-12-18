@@ -4,6 +4,7 @@ const {
     fetchAllPizzaOfTheMoments,
     fetchPizzasOfTheMomentById,
     createPizzasOfTheMoment,
+    updatePizzasOfTheMomentFull,
     patchPizzasOfTheMoment,
 } = require("../controllers/pizzaOfTheMomentController.js");
 const router = express.Router();
@@ -15,7 +16,10 @@ router.get('/:id', fetchPizzasOfTheMomentById);
 // POST
 router.post('/', createPizzasOfTheMoment);
 
-// PUT
-router.put('/:id', patchPizzasOfTheMoment);
+//PUT
+router.put('/:id', updatePizzasOfTheMomentFull);
+
+// PATCH
+router.patch('/:id', patchPizzasOfTheMoment);
 
 module.exports = router;
