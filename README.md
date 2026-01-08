@@ -30,3 +30,6 @@ Cette commande installe Express, Pug, Morgan, dotenv et l’ensemble des dépend
 commandes : ```npx -vnpm -vnode -v```
 <br>
 résultat : ```npx : 11.6.2 npm : 11.6.2 node : v22.18.0```
+
+### Emplacement du code à jour 
+**MAIN**
